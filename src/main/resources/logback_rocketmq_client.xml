@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<initParam>
+		<param name="notifyLevel" value="ERROR" />
+		<param name="logDelay" value="30000" />
+		<param name="logPeriod" value="30000" />
+	</initParam>
+
+	<contextName>arch</contextName>
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="logpath" value="d:/logs" />
+	
+	<!-- 控制台输出 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="UTF-8" class="ch.qos.logback.core.encoder.LogBackExEncoder">
+			<pattern>%date [%T] %-5level %logger{80}.%method:%line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 时间滚动输出 level为 DEBUG 日志 -->
+	<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logpath}/arch.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${logpath}/wechat-web%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>800MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+    	</rollingPolicy>
+		<encoder charset="UTF-8" class="ch.qos.logback.core.encoder.LogBackExEncoder">
+			<pattern>%date [%T] %-5level %logger{80}.%method:%line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile" />
+	</root>
+</configuration>
