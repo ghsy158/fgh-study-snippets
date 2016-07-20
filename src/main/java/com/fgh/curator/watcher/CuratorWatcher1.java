@@ -13,7 +13,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  * @since 2016年7月13日下午10:14:31
  */
 public class CuratorWatcher1 {
-	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
+	private static final String CONNECT_ADDR = "localhost:2181";
+//	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
 
 	private static final int TIME_OUT = 10000;
 
@@ -55,6 +56,9 @@ public class CuratorWatcher1 {
 		Thread.sleep(1000);
 		
 		cf.setData().forPath("/super","456".getBytes());
+		Thread.sleep(1000);
+		
+		cf.delete().forPath("/super");
 		
 		Thread.sleep(Integer.MAX_VALUE);
 		

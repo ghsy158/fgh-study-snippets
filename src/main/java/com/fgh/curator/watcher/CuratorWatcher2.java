@@ -18,7 +18,9 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  * @since 2016年7月13日下午10:14:31
  */
 public class CuratorWatcher2 {
-	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
+	private static final String CONNECT_ADDR = "localhost:2181";
+	// private static final String CONNECT_ADDR =
+	// "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
 
 	private static final int TIME_OUT = 10000;
 
@@ -55,13 +57,13 @@ public class CuratorWatcher2 {
 			public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
 				switch (event.getType()) {
 				case CHILD_ADDED:
-					System.out.println("CHILD_ADDED：" + event.getData().getPath());
+					System.out.println("添加节点：" + event.getData().getPath());
 					break;
 				case CHILD_REMOVED:
-					System.out.println("CHILD_REMOVED：" + event.getData().getPath());
+					System.out.println("删除节点：" + event.getData().getPath());
 					break;
 				case CHILD_UPDATED:
-					System.out.println("CHILD_UPDATED：" + event.getData().getPath());
+					System.out.println("更新节点：" + event.getData().getPath());
 					break;
 				default:
 					break;
@@ -71,14 +73,25 @@ public class CuratorWatcher2 {
 
 		Thread.sleep(1000);
 
-		//创建本身节点 不发生变化
-		cf.create().forPath("/super", "init".getBytes());
+		// 创建本身节点 不发生变化
+//		cf.create().forPath("/super", "init".getBytes());
 
 		Thread.sleep(1000);
 
+		cf.create().forPath("/super/c1", "init c1".getBytes());
+		Thread.sleep(1000);
+
+		cf.create().forPath("/super/c2", "init c1".getBytes());
+
+		Thread.sleep(1000);
 		cf.setData().forPath("/super", "456".getBytes());
+		Thread.sleep(1000);
+		cf.setData().forPath("/super/c1", "c1内容".getBytes());
+		Thread.sleep(1000);
+		cf.setData().forPath("/super/c2", "c2内容".getBytes());
 
 		Thread.sleep(Integer.MAX_VALUE);
 
+		cf.close();
 	}
 }
