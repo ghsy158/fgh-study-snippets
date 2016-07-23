@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 /**
  * 分布式barrier，同时开始,不同时结束<br>
- * 正常使用时,把barrier放到公共的 类里,别的项目直接引用
+ * 正常使用时,把barrier放到公共的 类里,别的项目直接引用,别的项目都使用一个static对象
  * 
  * @author fgh
  * @since 2016年7月23日上午10:49:54
