@@ -23,60 +23,60 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author fgh
- * @since 2016å¹´7æœˆ11æ—¥ä¸‹åˆ10:07:21
+ * @since 2016Äê7ÔÂ11ÈÕÏÂÎç10:07:21
  */
 public class ZookeeperAuth implements Watcher {
 
 	private static final Logger logger = LoggerFactory.getLogger(ZookeeperAuth.class);
 
-	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
+	private static final String CONNECT_ADDR = "localhost:2181";
 	static final int SESSION_TIMEOUT = 5000;
 
-	/** zkçˆ¶è·¯å¾„ **/
+	/** zk¸¸Â·¾¶ **/
 	private static final String PATH = "/testAuth";
 
 	private static final String PATH_DEL = "/testAuth/delNode";
 
 	private static final String authentication_type = "digest";
-	/** è®¤è¯æ­£ç¡®æ–¹æ³• **/
+	/** ÈÏÖ¤ÕıÈ··½·¨ **/
 	final static String correctAuthAuthentication = "123456";
-	/** è®¤è¯é”™è¯¯æ–¹æ³• **/
+	/** ÈÏÖ¤´íÎó·½·¨ **/
 	final static String badAuthetication = "654321";
 
 	static ZooKeeper zk = null;
 
 	AtomicInteger seq = new AtomicInteger();
 
-	private static final String LOG_PREFIX_OF_MAIN = "ã€mainã€‘";
+	private static final String LOG_PREFIX_OF_MAIN = "¡¾main¡¿";
 
 	private static final CountDownLatch connectedSemaphore = new CountDownLatch(1);
 
 	/**
 	 * 
-	 * <b>æ–¹æ³•åç§°ï¼š</b>åˆ›å»ºzkè¿æ¥<br>
-	 * <b>æ¦‚è¦è¯´æ˜ï¼š</b><br>
+	 * <b>·½·¨Ãû³Æ£º</b>´´½¨zkÁ¬½Ó<br>
+	 * <b>¸ÅÒªËµÃ÷£º</b><br>
 	 */
 	public void createConnection(String connectAddr, int sessionTimeout) {
-		logger.info("åˆ›å»ºzkè¿æ¥,connectAddr[" + connectAddr + "],sessionTimeout[" + sessionTimeout + "]");
+		logger.info("´´½¨zkÁ¬½Ó,connectAddr[" + connectAddr + "],sessionTimeout[" + sessionTimeout + "]");
 		this.releaseConnection();
 		try {
 			zk = new ZooKeeper(connectAddr, sessionTimeout, this);
-			// æ·»åŠ è®¤è¯ä¿¡æ¯
+			// Ìí¼ÓÈÏÖ¤ĞÅÏ¢
 			zk.addAuthInfo(authentication_type, correctAuthAuthentication.getBytes());
-			logger.info(LOG_PREFIX_OF_MAIN + "å¼€å§‹è¿æ¥zkæœåŠ¡å™¨...");
+			logger.info(LOG_PREFIX_OF_MAIN + "¿ªÊ¼Á¬½Ózk·şÎñÆ÷...");
 			connectedSemaphore.await();
 		} catch (Exception e) {
-			logger.error("åˆ›å»ºzkè¿æ¥å¤±è´¥,connectAddr[" + connectAddr + "],sessionTimeout[" + sessionTimeout + "]", e);
+			logger.error("´´½¨zkÁ¬½ÓÊ§°Ü,connectAddr[" + connectAddr + "],sessionTimeout[" + sessionTimeout + "]", e);
 		}
 	}
 
 	public void releaseConnection() {
-		logger.info("é‡Šæ”¾zkè¿æ¥...");
+		logger.info("ÊÍ·ÅzkÁ¬½Ó...");
 		if (this.zk != null) {
 			try {
 				this.zk.close();
 			} catch (InterruptedException e) {
-				logger.error("å…³é—­zkè¿æ¥å¤±è´¥", e);
+				logger.error("¹Ø±ÕzkÁ¬½ÓÊ§°Ü", e);
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class ZookeeperAuth implements Watcher {
 	@Override
 	public void process(WatchedEvent event) {
 
-		logger.info("è¿›å…¥process....event[" + event + "]");
+		logger.info("½øÈëprocess....event[" + event + "]");
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
@@ -98,26 +98,26 @@ public class ZookeeperAuth implements Watcher {
 
 		EventType eventType = event.getType();
 
-		// å—å½±å“çš„path
+		// ÊÜÓ°ÏìµÄpath
 		String path = event.getPath();
 
-		String logPrefix = "ã€Watcher-" + this.seq.incrementAndGet() + "ã€‘";
-		logger.info(logPrefix + "æ”¶åˆ°Watcheré€šçŸ¥");
-		logger.info(logPrefix + "è¿æ¥çŠ¶æ€:\t" + keeperState.toString());
-		logger.info(logPrefix + "äº‹ä»¶ç±»å‹:\t" + eventType.toString());
+		String logPrefix = "¡¾Watcher-" + this.seq.incrementAndGet() + "¡¿";
+		logger.info(logPrefix + "ÊÕµ½WatcherÍ¨Öª");
+		logger.info(logPrefix + "Á¬½Ó×´Ì¬:\t" + keeperState.toString());
+		logger.info(logPrefix + "ÊÂ¼şÀàĞÍ:\t" + eventType.toString());
 
 		if (KeeperState.SyncConnected == keeperState) {
-			// æˆåŠŸè¿æ¥ä¸ŠzkæœåŠ¡å™¨
+			// ³É¹¦Á¬½ÓÉÏzk·şÎñÆ÷
 			if (EventType.None == eventType) {
-				logger.info(logPrefix + "æˆåŠŸè¿æ¥ä¸ŠzkæœåŠ¡å™¨");
+				logger.info(logPrefix + "³É¹¦Á¬½ÓÉÏzk·şÎñÆ÷");
 				connectedSemaphore.countDown();
 			}
 		} else if (KeeperState.Disconnected == keeperState) {
-			logger.info(logPrefix + "ä¸zkæœåŠ¡å™¨æ–­å¼€è¿æ¥");
+			logger.info(logPrefix + "Óëzk·şÎñÆ÷¶Ï¿ªÁ¬½Ó");
 		} else if (KeeperState.AuthFailed == keeperState) {
-			logger.info(logPrefix + "æƒé™æ£€æŸ¥å¤±è´¥");
+			logger.info(logPrefix + "È¨ÏŞ¼ì²éÊ§°Ü");
 		} else if (KeeperState.Expired == keeperState) {
-			logger.info(logPrefix + "ä¼šè¯å¤±æ•ˆ");
+			logger.info(logPrefix + "»á»°Ê§Ğ§");
 		}
 		logger.info("-----------------------------------------------");
 
@@ -134,16 +134,16 @@ public class ZookeeperAuth implements Watcher {
 		}
 		
 		zk.create(PATH, "init content".getBytes(), acls, CreateMode.PERSISTENT);
-		logger.info("ä½¿ç”¨æˆæƒKey:"+correctAuthAuthentication+"åˆ›å»ºèŠ‚ç‚¹:"+PATH+",åˆå§‹å†…å®¹");
+		logger.info("Ê¹ÓÃÊÚÈ¨Key:"+correctAuthAuthentication+"´´½¨½Úµã:"+PATH+",³õÊ¼ÄÚÈİ");
 		
 		zk.create(PATH_DEL, "del content".getBytes(), acls, CreateMode.PERSISTENT);
-		logger.info("ä½¿ç”¨æˆæƒKey:"+correctAuthAuthentication+"åˆ›å»ºèŠ‚ç‚¹:"+PATH_DEL+",åˆå§‹å†…å®¹");
+		logger.info("Ê¹ÓÃÊÚÈ¨Key:"+correctAuthAuthentication+"´´½¨½Úµã:"+PATH_DEL+",³õÊ¼ÄÚÈİ");
 		
 		
 	}
 
 	static void getDataByBadAuthentication() throws IOException, InterruptedException{
-		String prefix = "{ä½¿ç”¨é”™è¯¯çš„æˆæƒä¿¡æ¯}";
+		String prefix = "{Ê¹ÓÃ´íÎóµÄÊÚÈ¨ĞÅÏ¢}";
 		ZooKeeper badZk = new ZooKeeper(CONNECT_ADDR,3000,null);
 		badZk.addAuthInfo(authentication_type, badAuthetication.getBytes());
 		

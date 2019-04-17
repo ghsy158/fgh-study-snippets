@@ -32,10 +32,12 @@ public class ZkClientWatcher1 {
 
 			@Override
 			public void handleDataDeleted(String dataPath) throws Exception {
+				System.out.println("handleDataDeleted,dataPath="+dataPath);
 			}
 
 			@Override
 			public void handleDataChange(String dataPath, Object data) throws Exception {
+				System.out.println("handleDataChange,dataPath="+dataPath+",data="+data);
 			}
 		});
 		Thread.sleep(2000);

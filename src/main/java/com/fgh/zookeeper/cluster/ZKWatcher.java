@@ -29,7 +29,7 @@ public class ZKWatcher implements Watcher {
 
 	private List<String> cowaList = new CopyOnWriteArrayList<String>();
 
-	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
+	private static final String CONNECT_ADDR = "localhost:2181";
 	static final int SESSION_TIMEOUT = 5000;
 
 	public ZKWatcher() {

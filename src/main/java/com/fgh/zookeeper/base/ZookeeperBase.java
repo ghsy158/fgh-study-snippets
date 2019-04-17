@@ -24,7 +24,8 @@ public class ZookeeperBase {
 
 	private static final Logger logger = LoggerFactory.getLogger(ZookeeperBase.class);
 
-	static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
+	private static final String CONNECT_ADDR = "localhost:2181";
+//	static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
 	static final int SESSION_TIMEOUT = 5000;
 
 	/** 阻塞程序执行，用于等待zookeeper连接成功,发送成功信号 **/
