@@ -7,7 +7,7 @@ package com.fgh.thread.singleton;
  */
 public class DoubleCheckSingleton {
 
-	private static DoubleCheckSingleton instance ;
+	private static volatile DoubleCheckSingleton instance ;
 	
 	public static DoubleCheckSingleton getInstance(){
 		if(null == instance){
