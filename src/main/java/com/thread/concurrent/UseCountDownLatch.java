@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * 
  * @author fgh
- * @Since 2016å¹´3æœˆ13æ—¥ ä¸‹åˆ7:02:41
+ * @Since 2016Äê3ÔÂ13ÈÕ ÏÂÎç7:02:41
  */
 public class UseCountDownLatch {
 
@@ -17,9 +17,9 @@ public class UseCountDownLatch {
 			@Override
 			public void run() {
 				try {
-					System.out.println("è¿›å…¥çº¿ç¨‹t1,ç­‰å¾…å…¶ä»–çº¿ç¨‹å¤„ç†å®Œæˆ");
+					System.out.println("½øÈëÏß³Ìt1,µÈ´ıÆäËûÏß³Ì´¦ÀíÍê³É");
 					countDown.await();
-					System.out.println("t1çº¿ç¨‹ç»§ç»­æ‰§è¡Œ...");
+					System.out.println("t1Ïß³Ì¼ÌĞøÖ´ĞĞ...");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -30,9 +30,9 @@ public class UseCountDownLatch {
 			@Override
 			public void run() {
 				try {
-					System.out.println("t2çº¿ç¨‹è¿›è¡Œåˆå§‹åŒ–æ“ä½œ...");
+					System.out.println("t2Ïß³Ì½øĞĞ³õÊ¼»¯²Ù×÷...");
 					Thread.sleep(3000);
-					System.out.println("t2çº¿ç¨‹åˆå§‹åŒ–å®Œæ¯•,é€šçŸ¥t1çº¿ç¨‹ç»§ç»­...");
+					System.out.println("t2Ïß³Ì³õÊ¼»¯Íê±Ï,Í¨Öªt1Ïß³Ì¼ÌĞø...");
 					countDown.countDown();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -45,9 +45,9 @@ public class UseCountDownLatch {
 			@Override
 			public void run() {
 				try {
-					System.out.println("t3çº¿ç¨‹è¿›è¡Œåˆå§‹åŒ–æ“ä½œ...");
+					System.out.println("t3Ïß³Ì½øĞĞ³õÊ¼»¯²Ù×÷...");
 					Thread.sleep(4000);
-					System.out.println("t3çº¿ç¨‹åˆå§‹åŒ–å®Œæ¯•,é€šçŸ¥t1çº¿ç¨‹ç»§ç»­...");
+					System.out.println("t3Ïß³Ì³õÊ¼»¯Íê±Ï,Í¨Öªt1Ïß³Ì¼ÌĞø...");
 					countDown.countDown();
 				} catch (InterruptedException e) {
 					e.printStackTrace();

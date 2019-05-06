@@ -10,10 +10,10 @@ import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
 /**
- * ä½¿ç”¨zookeeperå®ç°åˆ†å¸ƒå¼é”
+ * Ê¹ÓÃzookeeperÊµÏÖ·Ö²¼Ê½Ëø
  * 
  * @author fgh
- * @since 2016å¹´7æœˆ20æ—¥ä¸‹åˆ1:02:39
+ * @since 2016Äê7ÔÂ20ÈÕÏÂÎç1:02:39
  */
 public class Lock2 {
 
@@ -25,7 +25,7 @@ public class Lock2 {
 	static int count = 10;
 
 	public static CuratorFramework createCuratorFramework() {
-		// é‡è¯•ç­–ç•¥ åˆå§‹æ—¶é—´1s é‡è¯•10æ¬¡
+		// ÖØÊÔ²ßÂÔ ³õÊ¼Ê±¼ä1s ÖØÊÔ10´Î
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
 
 		CuratorFramework cf = CuratorFrameworkFactory.builder().connectString(CONNECT_ADDR).sessionTimeoutMs(TIME_OUT)
@@ -43,7 +43,7 @@ public class Lock2 {
 				public void run() {
 					CuratorFramework cf = createCuratorFramework();
 					cf.start();
-					//zookeeperçš„åˆ†å¸ƒå¼é”
+					//zookeeperµÄ·Ö²¼Ê½Ëø
 //					final InterProcessMutex lock = new InterProcessMutex(cf, "/lock");
 					
 					final ReentrantLock lock = new ReentrantLock();
@@ -51,7 +51,7 @@ public class Lock2 {
 						countDown.await();
 //						lock.acquire();
 						lock.lock();
-						System.out.println(Thread.currentThread().getName()+"æ‰§è¡Œä¸šåŠ¡é€»è¾‘...");
+						System.out.println(Thread.currentThread().getName()+"Ö´ĞĞÒµÎñÂß¼­...");
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();

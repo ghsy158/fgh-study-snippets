@@ -3,16 +3,16 @@ package com.thread.design.future;
 /**
  * 
  * @author fgh
- * 2016å¹´3æœˆ13æ—¥ ä¸Šåˆ11:47:24
+ * 2016Äê3ÔÂ13ÈÕ ÉÏÎç11:47:24
  */
 public class Main {
 	public static void main(String[] args) {
 		FutureClient fc = new FutureClient();
-		Data data = fc.request("è¯·æ±‚å‚æ•°");
-		System.out.println("è¯·æ±‚å‘é€æˆåŠŸ...");
-		System.out.println("åšå…¶ä»–çš„äº‹æƒ…...");
+		Data data = fc.request("ÇëÇó²ÎÊı");
+		System.out.println("ÇëÇó·¢ËÍ³É¹¦...");
+		System.out.println("×öÆäËûµÄÊÂÇé...");
 		
 		String result = data.getRequest();
-		System.out.println("ç»“æœ:"+result);
+		System.out.println("½á¹û:"+result);
 	}
 }
