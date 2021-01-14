@@ -81,5 +81,54 @@ public class SampleBrowser {
         String currentPage = sampleBrowser.getCurrentPage();
         System.out.println("currentPage = " + currentPage);
 
+        int result = sampleBrowser.reverse(-2147483648);
+        System.out.println(result);
+
     }
+
+    public int reverse(int x) {
+        if (x > Integer.MAX_VALUE || x < Integer.MIN_VALUE) {
+            return 0;
+        }
+        System.out.println("x=" + x);
+        int valAbs = Math.abs(x);
+        System.out.println("abs=" + x);
+        String valS = String.valueOf(valAbs);
+        char[] arr = valS.toCharArray();
+        String result = "";
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (!Character.isDigit(arr[i])) {
+                System.out.println("888");
+                continue;
+            }
+            result += arr[i];
+        }
+        System.out.println("reverse=" + result);
+        if (result == null || result.length() <= 0) {
+            return 0;
+        }
+        System.out.println("result=" + result);
+
+        Long resultInt = Long.valueOf(result);
+        System.out.println("resultInt=" + resultInt);
+        if (resultInt > Integer.MAX_VALUE || resultInt < Integer.MIN_VALUE) {
+            return 0;
+        }
+        if (x < 0) {
+            return 0 - Integer.parseInt(result);
+        }
+        return resultInt.intValue();
+    }
+
+    public boolean isPalindrome(int x) {
+        String origin = String.valueOf(x);
+        char[] arr = origin.toCharArray();
+        String result = "";
+        for (int i = arr.length - 1; i >= 0; i--) {
+            result += arr[i];
+        }
+        System.out.println("reverse=" + result);
+        return result.equals(origin);
+    }
+
 }

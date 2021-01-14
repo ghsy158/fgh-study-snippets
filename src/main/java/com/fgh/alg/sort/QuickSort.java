@@ -7,21 +7,23 @@ package com.fgh.alg.sort;
 public class QuickSort {
 
     public static void main(String[] args) {
-//        int[] arr = {1, 4, 6, 9, 10, 2, 7, 3, 5, 8};
-//        sort(arr, 0, arr.length - 1);
-//        printArr(arr);
+        int[] arr = {1, 4, 6, 9, 10, 2, 7, 3, 5, 8};
+        sort(arr, 0, arr.length - 1);
+        printArr(arr);
 
-        int i = 0;
-        int[] arr = new int[]{};
-        arr[3] = 0;
-        for (; i < 3; i++) {
-            arr[i] = 0;
-            System.out.println("hello world");
-        }
+//        int i = 0;
+//        int[] arr = new int[]{};
+//        arr[3] = 0;
+//        for (; i < 3; i++) {
+//            arr[i] = 0;
+//            System.out.println("hello world");
+//        }
     }
 
     public static void sort(int[] arr, int leftBound, int rightBound) {
-        if (leftBound >= rightBound) return;
+        if (leftBound >= rightBound){
+            return;
+        }
         int mid = partition(arr, leftBound, rightBound);
         sort(arr, leftBound, mid - 1);
         sort(arr, mid + 1, rightBound);

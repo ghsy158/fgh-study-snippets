@@ -39,6 +39,6 @@ public class CircularQueue {
      * @return
      */
     public String dequeue() {
-
+        return null;
     }
 }
