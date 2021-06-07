@@ -16,7 +16,7 @@
 		<junit.version>4.12</junit.version>
 		<spring.version>4.2.6.RELEASE</spring.version>
 		<rocketmq.version>3.2.6</rocketmq.version>
-		<logback.version>1.1.7</logback.version>
+		<logback.version>1.2.0</logback.version>
 	</properties>
 
 	<dependencies>
